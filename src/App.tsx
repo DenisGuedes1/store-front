@@ -1,12 +1,12 @@
 import { ToastContainer } from "react-toastify";
 import { RoutesMain as Routes } from "./routes/routes";
+import { GlobalStyles } from "./styles/globalstyles";
 
-
-const App = ()=> { 
-
+const App = () => {
   return (
     <>
-     <ToastContainer
+      <GlobalStyles />
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -18,9 +18,9 @@ const App = ()=> {
         pauseOnHover
         theme="light"
       />
-      <Routes/>
+      <Routes />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
