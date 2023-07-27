@@ -1,5 +1,3 @@
-export const FormLogin = ()=>{
-    return(
-        <></>
-    )
-}
+export const FormLogin = () => {
+    return <></>;
+};

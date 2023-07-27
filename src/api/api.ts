@@ -1,6 +1,6 @@
-import axios from "axios"
+import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "http://localhost:3000/",
-    timeout: 6000
-})
+    baseURL: "https://api-store-s8l5.onrender.com",
+    timeout: 20000,
+});
