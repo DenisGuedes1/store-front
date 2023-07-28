@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { api } from "../api/api";
-import {
-    IUserREgister,
-    IreturnRegisterUser,
-    IuserLogin,
-} from "./interfaces/user.interfaces";
+import { IUserREgister, IuserLogin } from "./interfaces/user.interfaces";
 export interface AuthContextType {
     registerUser: (formData: IUserREgister) => Promise<void>;
     loginUser: (formDataLogin: IuserLogin) => Promise<void>;
