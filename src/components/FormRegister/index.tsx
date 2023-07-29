@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import * as yup from "yup";
-import { AuthContext } from "../../Contexts/UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import { IUserREgister } from "../../Contexts/interfaces/user.interfaces";
 import {
     ConteinerForm,
@@ -16,7 +16,7 @@ import {
     ButtonRegistrar,
 } from "./style";
 export const FormRegister = () => {
-    const { registerUser } = useContext(AuthContext);
+    const { registerUser } = useContext(UserContext);
     const formSchema = yup.object().shape({
         name: yup.string().required("Nome Obrigatorio"),
         email: yup.string().required("email obrigatório"),

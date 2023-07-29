@@ -1,9 +1,10 @@
 import { FormLogin } from "../../components/FormLogin";
+import { ContainerForm } from "./style";
 
 export const Login = () => {
   return (
-    <div>
+    <ContainerForm>
       <FormLogin />
-    </div>
+    </ContainerForm>
   );
 };
