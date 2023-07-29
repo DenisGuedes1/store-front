@@ -121,7 +121,7 @@ export const FormRegister = () => {
                     <SpanConteiner>
                         <LabelAll htmlFor="avatar">Avatar</LabelAll>
                         <InputAll
-                            type="url"
+                            type="file"
                             id="Avatar"
                             placeholder="Escolha sua melhor foto"
                         />
