@@ -8,7 +8,7 @@ export const ConteinerForm = styled.div`
     height: 410px;
     align-items: center;
     margin: 0 auto;
-    padding: 8rem;
+    margin-top: 60px;
 `;
 export const Form = styled.form`
     display: flex;
@@ -85,6 +85,8 @@ export const ButtonRegistrar = styled.button`
     margin: 0 auto;
     font-family: "Inter", sans-serif;
     font-weight: 500;
+    background-color: transparent;
+    border: 2px solid blue;
 
     &:hover {
         background-color: #ffff;
@@ -93,5 +95,40 @@ export const ButtonRegistrar = styled.button`
 
     &:focus {
         border-bottom-color: #0041f7;
+    }
+`;
+
+export const LogoText = styled.p`
+    background: linear-gradient(to right, blue, #444444);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 90%;
+    font-size: 19px;
+`;
+export const InputFile = styled.input`
+    width: 80%;
+    padding: 7px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-bottom-color 0.3s;
+
+    &::file-selector-button {
+        background-color: #f0f0f0;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 70%;
+    }
+
+    &::file-selector-text {
+        color: #333;
+        font-size: 2px;
     }
 `;
