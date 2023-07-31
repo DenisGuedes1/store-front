@@ -2,8 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import * as yup from "yup";
+import { Headers } from "../../components/Header/index";
 import { UserContext } from "../../Contexts/UserContext";
-import { IUserREgister } from "../../Contexts/interfaces/user.interfaces";
 import {
     ConteinerForm,
     Form,
@@ -14,9 +14,11 @@ import {
     SpanConteiner,
     InputAll,
     ButtonRegistrar,
+    InputFile,
 } from "./style";
+
 export const FormRegister = () => {
-    const { registerUser } = useContext(UserContext);
+    const { registerUser, setCardFile, cardFile } = useContext(UserContext);
     const formSchema = yup.object().shape({
         name: yup.string().required("Nome Obrigatorio"),
         email: yup.string().required("email obrigatório"),
@@ -33,7 +35,7 @@ export const FormRegister = () => {
             .string()
             .required("Os campos de senha deve ser iguais")
             .oneOf([yup.ref("password"), "Os campos nao correspondem", ""]),
-        avatar: yup.string().optional(),
+        avatar: yup.string(),
     });
     const {
         register,
@@ -44,19 +46,21 @@ export const FormRegister = () => {
     });
     console.log(errors);
 
-    const onSubmitFunction = async (data: IUserREgister) => {
-        const dadosNewUser = {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            avatar: data.avatar,
-        };
-        await registerUser(dadosNewUser);
+    const onSubmitFunction = async (data: any) => {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("password", data.password);
+        formData.append("avatar", cardFile!);
+
+        await registerUser(data);
     };
+
+    const handleUploadFile = (e: any) => setCardFile(e.target.files[0]);
 
     return (
         <>
-            {/* ///chamar o header */}
+            <Headers isLogin={false} />
             <ConteinerForm>
                 <Form onSubmit={handleSubmit(onSubmitFunction)}>
                     <Title>Outlet Store</Title>
@@ -120,10 +124,12 @@ export const FormRegister = () => {
 
                     <SpanConteiner>
                         <LabelAll htmlFor="avatar">Avatar</LabelAll>
-                        <InputAll
+                        <InputFile
                             type="file"
                             id="Avatar"
+                            onChange={handleUploadFile}
                             placeholder="Escolha sua melhor foto"
+                            // {...register("avatar")}
                         />
                     </SpanConteiner>
 

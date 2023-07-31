@@ -15,6 +15,8 @@ export interface AuthContextType {
     User: iUserResponse | null;
     toast: typeof toast;
     loading: boolean;
+    setCardFile: any;
+    cardFile: any;
 }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
@@ -26,6 +28,7 @@ interface AuthProviderProps {
 }
 export const UserProvider = ({ children }: AuthProviderProps) => {
     const [loading, setLoading] = useState(true);
+    const [cardFile, setCardFile] = useState();
     const navigate = useNavigate();
     const [User, setUser] = useState<iUserResponse | null>(null);
 
@@ -69,13 +72,21 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             // toast.error(error);
         }
     };
-    const registerUser = async (formData: IUserREgister) => {
+    const registerUser = async (userData: any) => {
+        const formData = new FormData();
+        formData.append("name", userData.name);
+        formData.append("email", userData.email);
+        formData.append("password", userData.password);
+        formData.append("avatar", cardFile!);
         try {
             setLoading(true);
-            const response = await api.post("/store/register", formData);
 
-            // localStorage.setItem("@USERID", response.data.user.id);
-            localStorage.setItem("@TOKEN", response.data.token);
+            const response = await api.post("/store/register", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            console.log(response, "response requisição");
 
             setTimeout(() => {
                 navigate("/login", { replace: true });
@@ -90,7 +101,15 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
     return (
         <UserContext.Provider
-            value={{ registerUser, loginUser, User, toast, loading }}
+            value={{
+                registerUser,
+                loginUser,
+                cardFile,
+                User,
+                setCardFile,
+                toast,
+                loading,
+            }}
         >
             {children}
         </UserContext.Provider>
