@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Form } from "./style";
+import { BtnRegister, Form } from "./style";
 import { LoginSchema } from "../../schemas/loginSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
 
 interface iLoginFormValue {
   email: string;
@@ -45,7 +46,9 @@ export const FormLogin = () => {
         {errors.password && <p>{errors.password.message}</p>}
         <button>Logar</button>
         <span> esqueci minha senha</span>
-        <button>Cadastrar</button>
+        <Link to={"/register"}>
+          <BtnRegister>Cadastrar</BtnRegister>
+        </Link>
       </div>
     </Form>
   );

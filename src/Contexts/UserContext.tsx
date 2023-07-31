@@ -55,17 +55,19 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
   const loginUser = async (formDataLogin: IuserLogin) => {
     try {
-      const response = await api.post("/admin/login", formDataLogin);
-      const { token, user: UserResponse } = response.data;
+      const response = await api.post("store/login", formDataLogin);
+     
 
-      setUser(UserResponse);
+      setUser(response.data);
 
-      localStorage.setItem("@tokenUser", token);
+      window.localStorage.setItem("@tokenUser", response.data);
 
-      navigate("/dashboard");
+      navigate("/");
+      toast.success("Você está logado");
+      console.log(response)
     } catch (error) {
       console.log(error);
-      // toast.error(error);
+      toast.error("Email ou senha incorretas");
     }
   };
   const registerUser = async (formData: IUserREgister) => {

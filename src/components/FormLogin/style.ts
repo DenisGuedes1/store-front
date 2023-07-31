@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Form = styled.form`
   margin: 0 auto;
+  margin-top: 70px;
   width: 80%;
   max-width: 300px;
   height: 400px;
@@ -52,5 +53,20 @@ export const Form = styled.form`
       color: #00008b;
       font-size: 12px;
     }
+
+    p {
+      font-size: 10px;
+      color: red;
+      height: 1px;
+    }
+    a{
+      width: 98%;
+    }
   }
+`;
+
+export const BtnRegister = styled.button`
+  width: 100%;
+  padding: 7px;
+  margin-left: 20px;
 `;
