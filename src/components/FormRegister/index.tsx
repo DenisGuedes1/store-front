@@ -16,6 +16,7 @@ import {
     ButtonRegistrar,
     InputFile,
 } from "./style";
+import { FooterPage } from "../Footer";
 
 export const FormRegister = () => {
     const { registerUser, setCardFile, cardFile } = useContext(UserContext);
@@ -141,6 +142,7 @@ export const FormRegister = () => {
                     </ButtonRegistrar>
                 </Form>
             </ConteinerForm>
+            <FooterPage />
         </>
     );
 };

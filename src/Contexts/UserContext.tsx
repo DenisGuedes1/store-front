@@ -8,6 +8,7 @@ import {
     IuserLogin,
     iUserResponse,
 } from "./interfaces/user.interfaces";
+import { Category, Gender, Tamanho } from "./interfaces/products.interface";
 
 export interface AuthContextType {
     registerUser: (formData: IUserREgister) => Promise<void>;
@@ -17,6 +18,8 @@ export interface AuthContextType {
     loading: boolean;
     setCardFile: any;
     cardFile: any;
+    getProducts: any;
+    Products: any;
 }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
@@ -31,7 +34,23 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     const [cardFile, setCardFile] = useState();
     const navigate = useNavigate();
     const [User, setUser] = useState<iUserResponse | null>(null);
-
+    const [Products, SetProducts] = useState([
+        {
+            id: "",
+            name: "",
+            descricao: "",
+            foto1: "",
+            foto2: "",
+            foto3: "",
+            price: 0,
+            isActive: true,
+            promotion: true,
+            category: Category.Camisas,
+            gender: Gender.Masculino,
+            quantity: 2,
+            tamanho: Tamanho.GG,
+        },
+    ]);
     useEffect(() => {
         const loadUser = async () => {
             const token = localStorage.getItem("@tokenUser");
@@ -40,7 +59,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
                 return;
             }
             try {
-                const { data } = await api.get("/profile", {
+                const { data } = await api.get("/user", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -54,7 +73,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
                 setLoading(false);
             }
         };
-        loadUser();
+        // loadUser();
     }, []);
 
     const loginUser = async (formDataLogin: IuserLogin) => {
@@ -98,10 +117,31 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             setLoading(false);
         }
     };
+    const getProducts = async () => {
+        try {
+            const response = await api.get("/products");
+            console.log(response, "response get");
+            SetProducts(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        const fetchData = async () => {
+            await getProducts();
+            const intervalId = setInterval(getProducts, 9000);
+
+            return () => clearInterval(intervalId);
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <UserContext.Provider
             value={{
+                getProducts,
+                Products,
                 registerUser,
                 loginUser,
                 cardFile,
