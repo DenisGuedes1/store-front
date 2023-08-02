@@ -4,24 +4,18 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { api } from "../api/api";
 import {
-    IUserREgister,
+    CardFile,
     IuserLogin,
     iUserResponse,
 } from "./interfaces/user.interfaces";
-import { Category, Gender, Tamanho } from "./interfaces/products.interface";
+import {
+    Category,
+    Gender,
+    IProducts,
+    Tamanho,
+} from "./interfaces/products.interface";
+import { AuthContextType } from "./interfaces/context.interface";
 
-export interface AuthContextType {
-    registerUser: (formData: IUserREgister) => Promise<void>;
-    loginUser: (formDataLogin: IuserLogin) => Promise<void>;
-    User: iUserResponse | null;
-    toast: typeof toast;
-    loading: boolean;
-    setCardFile: any;
-    cardFile: any;
-    getProducts: any;
-    Products: any;
-}
-// export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
     {} as AuthContextType
 );
@@ -31,25 +25,25 @@ interface AuthProviderProps {
 }
 export const UserProvider = ({ children }: AuthProviderProps) => {
     const [loading, setLoading] = useState(true);
-    const [cardFile, setCardFile] = useState();
+    const [cardFile, setCardFile] = useState<CardFile>(null);
     const navigate = useNavigate();
     const [User, setUser] = useState<iUserResponse | null>(null);
-    const [Products, SetProducts] = useState([
-        {
-            id: "",
-            name: "",
-            descricao: "",
-            foto1: "",
-            foto2: "",
-            foto3: "",
-            price: 0,
-            isActive: true,
-            promotion: true,
-            category: Category.Camisas,
-            gender: Gender.Masculino,
-            quantity: 2,
-            tamanho: Tamanho.GG,
-        },
+    const [Products, SetProducts] = useState<IProducts[]>([
+        // {
+        //     id: "",
+        //     name: "",
+        //     descricao: "",
+        //     foto1: "",
+        //     foto2: "",
+        //     foto3: "",
+        //     price: 0,
+        //     isActive: true,
+        //     promotion: true,
+        //     category: Category.Camisas,
+        //     gender: Gender.Masculino,
+        //     quantity: 2,
+        //     tamanho: Tamanho.GG,
+        // },
     ]);
     useEffect(() => {
         const loadUser = async () => {
@@ -112,6 +106,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             }, 2000);
             toast("Usuário registrado com sucesso!");
         } catch (error) {
+            toast.error("Ops algo deu errado");
             console.log(error);
         } finally {
             setLoading(false);
@@ -120,7 +115,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     const getProducts = async () => {
         try {
             const response = await api.get("/products");
-            console.log(response, "response get");
+
             SetProducts(response.data);
         } catch (error) {
             console.log(error);
@@ -134,7 +129,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             return () => clearInterval(intervalId);
         };
 
-        fetchData();
+        // fetchData();
     }, []);
 
     return (
@@ -142,6 +137,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             value={{
                 getProducts,
                 Products,
+                SetProducts,
                 registerUser,
                 loginUser,
                 cardFile,
