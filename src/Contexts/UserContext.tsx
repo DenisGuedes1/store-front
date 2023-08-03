@@ -10,19 +10,20 @@ import {
     iUserResponse,
 } from "./interfaces/user.interfaces";
 import { IProducts } from "./interfaces/products.interface";
+import { AuthContextType } from "./interfaces/context.interface";
 
-export interface AuthContextType {
-    registerUser: (formData: IUserREgister) => Promise<void>;
-    loginUser: (formDataLogin: IuserLogin) => Promise<void>;
-    User: iUserResponse | null;
-    toast: typeof toast;
-    loading: boolean;
-    setCardFile: any;
-    cardFile: any;
-    getProducts: any;
-    Products: IProducts | [];
-    userInfo: IuserInfo | null;
-}
+// export interface AuthContextType {
+//     registerUser: (formData: IUserREgister) => Promise<void>;
+//     loginUser: (formDataLogin: IuserLogin) => Promise<void>;
+//     User: iUserResponse | null;
+//     toast: typeof toast;
+//     loading: boolean;
+//     setCardFile: any;
+//     cardFile: any;
+//     getProducts: any;
+//     Products: IProducts | [];
+//     userInfo: IuserInfo | null;
+// }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
     {} as AuthContextType
@@ -50,11 +51,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                //
-                console.log(response.data);
-                setUserInfo(response.data);
 
-                //
+                setUserInfo(response.data);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -104,26 +102,27 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     const getProducts = async () => {
         try {
             const response = await api.get("products");
-            console.log(response, "response get");
+
             SetProducts(response.data);
         } catch (error) {
             console.log(error);
         }
     };
-    //   useEffect(() => {
-    //     const fetchData = async () => {
-    //     //   await getProducts();
-    //       const intervalId = setInterval(getProducts, 9000);
+    useEffect(() => {
+        const fetchData = async () => {
+            await getProducts();
+            const intervalId = setInterval(getProducts, 9000);
 
-    //       return () => clearInterval(intervalId);
-    //     };
+            return () => clearInterval(intervalId);
+        };
 
-    //     fetchData();
-    //   }, []);
+        fetchData();
+    }, []);
 
     return (
         <UserContext.Provider
             value={{
+                SetProducts,
                 getProducts,
                 registerUser,
                 loginUser,

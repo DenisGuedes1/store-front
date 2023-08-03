@@ -21,13 +21,11 @@ import {
 import { HeartAdd, BagTick2 } from "iconsax-react";
 import { toast } from "react-toastify";
 export const ProductsList = () => {
-    const { Products, getProducts } = useContext(UserContext);
-    const getProduct = async () => {
-        await getProducts();
-    };
-    getProduct();
+    const { Products } = useContext(UserContext);
+    console.log(Products, "*****produtos");
+
     const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
-    console.log(favoriteProducts, "favoriteProducts*******");
+
     const idProducts = (id: string) => {
         toggleFavorite(id);
     };

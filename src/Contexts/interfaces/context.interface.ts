@@ -1,6 +1,11 @@
 import { toast } from "react-toastify";
 import { IProducts } from "./products.interface";
-import { IUserREgister, IuserLogin, iUserResponse } from "./user.interfaces";
+import {
+    IUserREgister,
+    IuserInfo,
+    IuserLogin,
+    iUserResponse,
+} from "./user.interfaces";
 
 export interface AuthContextType {
     registerUser: (formData: IUserREgister) => Promise<void>;
@@ -11,10 +16,11 @@ export interface AuthContextType {
     setCardFile: any;
     cardFile: any;
     getProducts: () => void;
-    Products: IProducts[];
+    Products: IProducts | [];
     SetProducts: any;
+    userInfo: IuserInfo | null;
 }
 export interface AuthContextProductsType {
     getProducts: () => void;
-    SetProducts: any;
+    // SetProducts: any;
 }

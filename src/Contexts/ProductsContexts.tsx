@@ -4,27 +4,29 @@ import { api } from "../api/api";
 
 import { AuthContextProductsType } from "./interfaces/context.interface";
 
-export const UserContext = createContext<AuthContextProductsType>(
+export const ProductsProvider = createContext<AuthContextProductsType>(
     {} as AuthContextProductsType
 );
 
 interface AuthProviderProps {
     children: ReactNode;
 }
-export const ProductsProvider = ({ children }: AuthProviderProps) => {
-    const { SetProducts } = useContext(UserContext);
+export const ProductsContext = ({ children }: AuthProviderProps) => {
+    // const { SetProducts } = useContext(UserContext);
+
     const getProducts = async () => {
         try {
             const response = await api.get("/products");
             console.log(response, "response get");
-            SetProducts(response.data);
+            const productsData = response.data;
+            // SetProducts(productsData);
         } catch (error) {
             console.log(error);
         }
     };
     useEffect(() => {
         const fetchData = async () => {
-            await getProducts();
+            // await getProducts();
             const intervalId = setInterval(getProducts, 9000);
 
             return () => clearInterval(intervalId);
@@ -34,13 +36,12 @@ export const ProductsProvider = ({ children }: AuthProviderProps) => {
     }, []);
 
     return (
-        <UserContext.Provider
+        <ProductsProvider.Provider
             value={{
                 getProducts,
-                SetProducts,
             }}
         >
             {children}
-        </UserContext.Provider>
+        </ProductsProvider.Provider>
     );
 };
