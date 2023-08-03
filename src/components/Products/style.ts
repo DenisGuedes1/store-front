@@ -57,10 +57,10 @@ export const ConteinerDivLoad = styled.div`
 export const UlProductsList = styled.ul`
     width: 40%;
     max-width: 260px;
-    height: 53%;
+    height: 60%;
     border: 1px solid #ccc;
     border-radius: 10px;
-    max-height: 370px;
+    max-height: 410px;
     display: flex;
     align-content: center;
     flex-direction: column;
@@ -103,4 +103,54 @@ export const Liproducts = styled.li`
     max-width: 260px;
     height: 90%;
     max-height: 370px;
+    padding: 15px;
+`;
+export const IconWrapper = styled.span`
+    position: relative;
+    display: inline-block;
+    & .heartIcon {
+        position: absolute;
+        top: -250px;
+        left: 170px;
+        z-index: 1;
+        cursor: pointer;
+    }
+    & .heartIcon--True {
+        background-color: red;
+    }
+`;
+
+export const AnimatedButton = styled.button`
+    width: 50%;
+    padding: 0px;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    height: 25px;
+    border: 2px solid blue;
+    background-color: transparent;
+    transition: background-color 0.3s, transform 0.3s;
+
+    &:hover {
+        background-color: #000;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+    &:focus {
+        border-bottom-color: #0041f7;
+    }
+`;
+
+export const SpanSale = styled.span`
+    display: flex;
+    width: 73%;
+    align-items: center;
+    max-width: 201px;
+    gap: 3rem;
+`;
+export const ButtonSaleCart = styled.button`
+    border: none;
+    background-color: transparent;
 `;
