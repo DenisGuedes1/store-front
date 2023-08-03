@@ -8,6 +8,11 @@ import {
     LoadingDots,
     UlProductsList,
     ImgProducts,
+    NameProducts,
+    CategoryProducts,
+    PriceProducts,
+    SpanInfoPorducts,
+    Liproducts,
 } from "./style";
 
 export const ProductsList = () => {
@@ -15,26 +20,29 @@ export const ProductsList = () => {
     const getProduct = async () => {
         await getProducts();
     };
-    console.log(Products, "****************produ");
     getProduct();
     return (
         <>
             <ButtonsFilter />
-            {Products.length > 0 ? ( // Verifique se o array Products contém algum produto
+            {Array.isArray(Products) && Products.length > 0 ? (
                 <ConteinerDiv>
                     {Products.map((product: IProducts) => (
                         <UlProductsList>
-                            <li key={product.id}>
+                            <Liproducts key={product.id}>
                                 <ImgProducts src={product.foto1} alt="" />
-                                <span>
-                                    <p>{product.name}</p>
-                                    <p>{product.category}</p>
-                                    <p>{product.descricao}</p>
-                                    <p>
+                                <SpanInfoPorducts>
+                                    <NameProducts>{product.name}</NameProducts>
+                                    <CategoryProducts>
+                                        {product.category}
+                                    </CategoryProducts>
+                                    <CategoryProducts>
+                                        {product.descricao}
+                                    </CategoryProducts>
+                                    <PriceProducts>
                                         R${parseFloat(product.price).toFixed(2)}
-                                    </p>
-                                </span>
-                            </li>
+                                    </PriceProducts>
+                                </SpanInfoPorducts>
+                            </Liproducts>
                         </UlProductsList>
                     ))}
                 </ConteinerDiv>

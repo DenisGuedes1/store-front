@@ -4,8 +4,8 @@ export const ConteinerDiv = styled.div`
     display: flex;
     align-items: center;
     gap: 7%;
-    width: 960px;
-    max-width: 70%;
+    width: 90%;
+    max-width: 960px;
     flex-wrap: wrap;
     height: 750px;
     max-height: 70%;
@@ -55,13 +55,52 @@ export const ConteinerDivLoad = styled.div`
     max-height: 729px;
 `;
 export const UlProductsList = styled.ul`
-    width: 257px;
-    max-width: 33.5%;
-    height: 340px;
-    border: 2px solid #ccc;
+    width: 40%;
+    max-width: 260px;
+    height: 53%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-height: 370px;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    margin: 0 auto;
 `;
 export const ImgProducts = styled.img`
-    width: 250px;
-    height: 250px;
+    width: 80%;
+    max-width: 250px;
+    height: 80%;
+    max-height: 250px;
     object-fit: cover;
+`;
+export const NameProducts = styled.p`
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+`;
+
+export const CategoryProducts = styled.p`
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+`;
+
+export const PriceProducts = styled.p`
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+`;
+export const SpanInfoPorducts = styled.span`
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+    margin: 0 auto;
+
+    gap: 6px;
+`;
+export const Liproducts = styled.li`
+    width: 100%;
+    max-width: 260px;
+    height: 90%;
+    max-height: 370px;
 `;
