@@ -14,6 +14,7 @@ export const ButtonsFilter = () => {
                 <button>Casacos</button>
                 <button>Jaquetas</button>
                 <button>Roupas íntimas</button>
+                <input type="text" placeholder="Faça sua busca" />
             </DivConteinerButtons>
         </>
     );
