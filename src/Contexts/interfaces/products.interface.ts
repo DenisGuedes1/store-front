@@ -31,11 +31,14 @@ export interface IProducts {
     foto1: string;
     foto2: string;
     foto3: string;
-    price: number;
+    price: string;
     isActive: boolean;
     promotion: boolean;
     category: Category;
     gender: Gender;
     quantity: number;
     tamanho: Tamanho;
+}
+export interface GetProductsFunction {
+    (): Promise<IProducts[]>;
 }
