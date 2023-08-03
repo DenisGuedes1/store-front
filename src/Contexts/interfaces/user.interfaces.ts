@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface IUserREgister {
   name: string;
   email: string;
@@ -31,3 +33,11 @@ export interface IuserInfo {
   password: string;
   reset_token: boolean;
 }
+export interface ICardFile {
+    name: string;
+    size: number;
+    type: string;
+    file: File;
+}
+export type FileChangeEvent = ChangeEvent<ICardFile>;
+export type CardFile = File | null;

@@ -17,6 +17,7 @@ import {
     InputFile,
 } from "./style";
 import { FooterPage } from "../Footer";
+import { IUserREgister } from "../../Contexts/interfaces/user.interfaces";
 
 export const FormRegister = () => {
     const { registerUser, setCardFile, cardFile } = useContext(UserContext);
@@ -45,9 +46,8 @@ export const FormRegister = () => {
     } = useForm({
         resolver: yupResolver(formSchema),
     });
-    console.log(errors);
 
-    const onSubmitFunction = async (data: any) => {
+    const onSubmitFunction = async (data: IUserREgister) => {
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("email", data.email);

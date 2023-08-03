@@ -2,36 +2,48 @@ import { useContext } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 import { IProducts } from "../../Contexts/interfaces/products.interface";
 import { ButtonsFilter } from "../ButtonFilter";
-import { ConteinerDiv } from "./style";
+import {
+    ConteinerDiv,
+    ConteinerDivLoad,
+    LoadingDots,
+    UlProductsList,
+    ImgProducts,
+} from "./style";
 
 export const ProductsList = () => {
     const { Products, getProducts } = useContext(UserContext);
     const getProduct = async () => {
         await getProducts();
     };
+    console.log(Products, "****************produ");
     getProduct();
     return (
         <>
             <ButtonsFilter />
-            {Products !== null ? (
+            {Products.length > 0 ? ( // Verifique se o array Products contém algum produto
                 <ConteinerDiv>
                     {Products.map((product: IProducts) => (
-                        <ul>
+                        <UlProductsList>
                             <li key={product.id}>
-                                <img src={product.foto1} alt="" />
+                                <ImgProducts src={product.foto1} alt="" />
                                 <span>
-                                    <p>{product.name} </p>
+                                    <p>{product.name}</p>
                                     <p>{product.category}</p>
                                     <p>{product.descricao}</p>
-                                    <p>{product.price} </p>
+                                    <p>
+                                        R${parseFloat(product.price).toFixed(2)}
+                                    </p>
                                 </span>
                             </li>
-                        </ul>
+                        </UlProductsList>
                     ))}
                 </ConteinerDiv>
             ) : (
-                // Caso os produtos sejam null (ainda não foram carregados), mostre uma mensagem de carregamento
-                <div>Carregando produtos...</div>
+                <ConteinerDivLoad>
+                    <LoadingDots className="loading-dots">
+                        Carregando Produtos
+                    </LoadingDots>
+                </ConteinerDivLoad>
             )}
         </>
     );

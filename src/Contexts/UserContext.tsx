@@ -9,7 +9,7 @@ import {
   IuserLogin,
   iUserResponse,
 } from "./interfaces/user.interfaces";
-import { Category, Gender, Tamanho } from "./interfaces/products.interface";
+import { IProducts } from "./interfaces/products.interface";
 
 export interface AuthContextType {
   registerUser: (formData: IUserREgister) => Promise<void>;
@@ -20,7 +20,7 @@ export interface AuthContextType {
   setCardFile: any;
   cardFile: any;
   getProducts: any;
-  Products: any;
+  Products: IProducts | null;
   userInfo: IuserInfo | null;
 }
 // export const AuthContext = createContext({});
@@ -37,23 +37,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
   const [User, setUser] = useState<iUserResponse | null>(null);
   const [userInfo, setUserInfo] = useState<IuserInfo | null>(null);
-  const [Products, SetProducts] = useState([
-    {
-      id: "",
-      name: "",
-      descricao: "",
-      foto1: "",
-      foto2: "",
-      foto3: "",
-      price: 0,
-      isActive: true,
-      promotion: true,
-      category: Category.Camisas,
-      gender: Gender.Masculino,
-      quantity: 2,
-      tamanho: Tamanho.GG,
-    },
-  ]);
+  const [Products, SetProducts] = useState<IProducts | []>([]);
   useEffect(() => {
     const loadUser = async () => {
       const token = localStorage.getItem("@tokenUser");
@@ -88,7 +72,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
       window.localStorage.setItem("@tokenUser", response.data);
 
-      navigate("/dashboard");
+      navigate("/");
       toast.success("Você está logado");
       console.log(response);
     } catch (error) {
@@ -141,7 +125,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     <UserContext.Provider
       value={{
         getProducts,
-        Products,
         registerUser,
         loginUser,
         cardFile,
@@ -150,6 +133,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         toast,
         loading,
         userInfo,
+        Products,
       }}
     >
       {children}

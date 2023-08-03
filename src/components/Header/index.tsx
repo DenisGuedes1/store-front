@@ -16,7 +16,7 @@ export const Headers: React.FC<HeadersProps> = ({ isLogin }) => {
       navigate("/login");
     }
   };
-  const showBothButtons = location.pathname === "/dashboard";
+  const showBothButtons = location.pathname === "/";
   return (
     <>
       <DivHeader>
@@ -27,10 +27,7 @@ export const Headers: React.FC<HeadersProps> = ({ isLogin }) => {
               <>
                 <span>{userInfo?.email}</span>
                 <ButtonAndLogin onClick={() => navigate("/login")}>
-                  Login
-                </ButtonAndLogin>
-                <ButtonAndLogin onClick={() => navigate("/register")}>
-                  Register
+                  Sair
                 </ButtonAndLogin>
               </>
             ) : (
