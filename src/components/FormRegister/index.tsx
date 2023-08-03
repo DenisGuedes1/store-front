@@ -2,10 +2,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import * as yup from "yup";
+import { Headers } from "../../components/Header/index";
 import { UserContext } from "../../Contexts/UserContext";
-import { IUserREgister } from "../../Contexts/interfaces/user.interfaces";
+import {
+    ConteinerForm,
+    Form,
+    Title,
+    SubTitle,
+    LabelAll,
+    NotificationsError,
+    SpanConteiner,
+    InputAll,
+    ButtonRegistrar,
+    InputFile,
+} from "./style";
+import { FooterPage } from "../Footer";
+
 export const FormRegister = () => {
-    const { registerUser } = useContext(UserContext);
+    const { registerUser, setCardFile, cardFile } = useContext(UserContext);
     const formSchema = yup.object().shape({
         name: yup.string().required("Nome Obrigatorio"),
         email: yup.string().required("email obrigatório"),
@@ -22,7 +36,7 @@ export const FormRegister = () => {
             .string()
             .required("Os campos de senha deve ser iguais")
             .oneOf([yup.ref("password"), "Os campos nao correspondem", ""]),
-        avatar: yup.string().optional(),
+        avatar: yup.string(),
     });
     const {
         register,
@@ -33,75 +47,102 @@ export const FormRegister = () => {
     });
     console.log(errors);
 
-    const onSubmitFunction = async (data: IUserREgister) => {
-        const dadosNewUser = {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            avatar: data.avatar,
-        };
-        await registerUser(dadosNewUser);
+    const onSubmitFunction = async (data: any) => {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("password", data.password);
+        formData.append("avatar", cardFile!);
+
+        await registerUser(data);
     };
+
+    const handleUploadFile = (e: any) => setCardFile(e.target.files[0]);
 
     return (
         <>
-            {/* ///chamar o header */}
-            <div>
-                <form onSubmit={handleSubmit(onSubmitFunction)}>
-                    <h1>Outlet Store</h1>
-                    <h2>Register</h2>
-                    <label htmlFor="nome">None</label>
-                    <input
-                        type="text"
-                        id="nome"
-                        placeholder="Digite seu nome"
-                        {...register("name")}
-                    />
-                    <h4 className="error"> {errors.name?.message}</h4>
+            <Headers isLogin={false} />
+            <ConteinerForm>
+                <Form onSubmit={handleSubmit(onSubmitFunction)}>
+                    <Title>Outlet Store</Title>
+                    <SubTitle>Cadastro</SubTitle>
+                    <SpanConteiner>
+                        <LabelAll htmlFor="nome">Nome</LabelAll>
+                        <InputAll
+                            type="text"
+                            id="nome"
+                            placeholder="Digite seu nome"
+                            {...register("name")}
+                        />
+                        <NotificationsError className="error">
+                            {" "}
+                            {errors.name?.message}
+                        </NotificationsError>
+                    </SpanConteiner>
+                    <SpanConteiner>
+                        <LabelAll htmlFor="email">E-mail</LabelAll>
+                        <InputAll
+                            type="email"
+                            id="email"
+                            placeholder="Digite seu melhor e-mail"
+                            {...register("email")}
+                        />
+                        <NotificationsError className="error">
+                            {" "}
+                            {errors.email?.message}
+                        </NotificationsError>
+                    </SpanConteiner>
 
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Digite seu melhor e-mail"
-                        {...register("email")}
-                    />
-                    <h4 className="error"> {errors.email?.message}</h4>
+                    <SpanConteiner>
+                        <LabelAll htmlFor="password">Senha</LabelAll>
+                        <InputAll
+                            type="password"
+                            placeholder="digite sua senha"
+                            {...register("password")}
+                        />
+                        <NotificationsError className="error">
+                            {" "}
+                            {errors.password?.message}
+                        </NotificationsError>
+                    </SpanConteiner>
 
-                    <label htmlFor="password">Senha</label>
-                    <input
-                        type="password"
-                        placeholder="digite sua senha"
-                        {...register("password")}
-                    />
-                    <h4 className="error"> {errors.password?.message}</h4>
+                    <SpanConteiner>
+                        <LabelAll htmlFor="confirmPassword">
+                            {" "}
+                            Confirme sua senha
+                        </LabelAll>
+                        <InputAll
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirme sua senha.."
+                            {...register("confirmPassword")}
+                        />
+                        <NotificationsError className="error">
+                            {" "}
+                            {errors.confirmPassword?.message}
+                        </NotificationsError>
+                    </SpanConteiner>
 
-                    <label htmlFor="confirmPassword"> Confirme sua senha</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        placeholder="Confirme sua senha.."
-                        {...register("confirmPassword")}
-                    />
-                    <h4 className="error">
-                        {" "}
-                        {errors.confirmPassword?.message}
-                    </h4>
-                    <label htmlFor="avatar">Avatar</label>
-                    <input
-                        type="image"
-                        id="Avatar"
-                        placeholder="Escolha sua melhor foto"
-                    />
+                    <SpanConteiner>
+                        <LabelAll htmlFor="avatar">Avatar</LabelAll>
+                        <InputFile
+                            type="file"
+                            id="Avatar"
+                            onChange={handleUploadFile}
+                            placeholder="Escolha sua melhor foto"
+                            // {...register("avatar")}
+                        />
+                    </SpanConteiner>
 
-                    <button
+                    <ButtonRegistrar
                         type="submit"
                         onClick={handleSubmit(onSubmitFunction)}
                     >
                         Registrar
-                    </button>
-                </form>
-            </div>
+                    </ButtonRegistrar>
+                </Form>
+            </ConteinerForm>
+            <FooterPage />
         </>
     );
 };

@@ -5,15 +5,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { api } from "../api/api";
 import {
   IUserREgister,
+  IuserInfo,
   IuserLogin,
   iUserResponse,
 } from "./interfaces/user.interfaces";
+import { Category, Gender, Tamanho } from "./interfaces/products.interface";
+
 export interface AuthContextType {
   registerUser: (formData: IUserREgister) => Promise<void>;
   loginUser: (formDataLogin: IuserLogin) => Promise<void>;
   User: iUserResponse | null;
   toast: typeof toast;
   loading: boolean;
+  setCardFile: any;
+  cardFile: any;
+  getProducts: any;
+  Products: any;
+  userInfo: IuserInfo | null;
 }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
@@ -25,24 +33,43 @@ interface AuthProviderProps {
 }
 export const UserProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true);
+  const [cardFile, setCardFile] = useState();
   const navigate = useNavigate();
   const [User, setUser] = useState<iUserResponse | null>(null);
-
+  const [userInfo, setUserInfo] = useState<IuserInfo | null>(null);
+  const [Products, SetProducts] = useState([
+    {
+      id: "",
+      name: "",
+      descricao: "",
+      foto1: "",
+      foto2: "",
+      foto3: "",
+      price: 0,
+      isActive: true,
+      promotion: true,
+      category: Category.Camisas,
+      gender: Gender.Masculino,
+      quantity: 2,
+      tamanho: Tamanho.GG,
+    },
+  ]);
   useEffect(() => {
     const loadUser = async () => {
       const token = localStorage.getItem("@tokenUser");
       if (!token) {
         setLoading(false);
-        return;
       }
       try {
-        const { data } = await api.get("/profile", {
+        const response = await api.get("store/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         //
-        setUser(data);
+        console.log(response.data);
+        setUserInfo(response.data);
+
         //
       } catch (error) {
         console.log(error);
@@ -51,32 +78,34 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       }
     };
     loadUser();
-  }, []);
+  }, [User]);
 
   const loginUser = async (formDataLogin: IuserLogin) => {
     try {
       const response = await api.post("store/login", formDataLogin);
-     
 
       setUser(response.data);
 
       window.localStorage.setItem("@tokenUser", response.data);
 
-      navigate("/");
+      navigate("/dashboard");
       toast.success("Você está logado");
-      console.log(response)
+      console.log(response);
     } catch (error) {
       console.log(error);
       toast.error("Email ou senha incorretas");
     }
   };
+
   const registerUser = async (formData: IUserREgister) => {
     try {
       setLoading(true);
-      const response = await api.post("/store/register", formData);
-
-      // localStorage.setItem("@USERID", response.data.user.id);
-      localStorage.setItem("@TOKEN", response.data.token);
+      const response = await api.post("store/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response, "response requisição");
 
       setTimeout(() => {
         navigate("/login", { replace: true });
@@ -88,10 +117,40 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       setLoading(false);
     }
   };
+  const getProducts = async () => {
+    try {
+      const response = await api.get("products");
+      console.log(response, "response get");
+      SetProducts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //     //   await getProducts();
+  //       const intervalId = setInterval(getProducts, 9000);
+
+  //       return () => clearInterval(intervalId);
+  //     };
+
+  //     fetchData();
+  //   }, []);
 
   return (
     <UserContext.Provider
-      value={{ registerUser, loginUser, User, toast, loading }}
+      value={{
+        getProducts,
+        Products,
+        registerUser,
+        loginUser,
+        cardFile,
+        User,
+        setCardFile,
+        toast,
+        loading,
+        userInfo,
+      }}
     >
       {children}
     </UserContext.Provider>

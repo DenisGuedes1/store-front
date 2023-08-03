@@ -13,10 +13,21 @@ export interface IuserLogin {
 export interface IreturnRegisterUser {
   name: string;
   email: string;
-  avatar?: string;
+  avatar: string;
   id: string;
 }
 
 export interface iUserResponse {
   token: string;
+}
+
+export interface IuserInfo {
+  adress: boolean;
+  avatar: boolean;
+  email: string;
+  id: string;
+  isAdmin: boolean;
+  name: string;
+  password: string;
+  reset_token: boolean;
 }

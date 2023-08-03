@@ -7,24 +7,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
 interface iLoginFormValue {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 export const FormLogin = () => {
-  const { loginUser } = useContext(UserContext);
+    const { loginUser } = useContext(UserContext);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<iLoginFormValue>({
-    resolver: yupResolver(LoginSchema),
-  });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<iLoginFormValue>({
+        resolver: yupResolver(LoginSchema),
+    });
 
-  const submitLogin: SubmitHandler<iLoginFormValue> = (data) => {
-    loginUser(data);
-  };
+    const submitLogin: SubmitHandler<iLoginFormValue> = (data) => {
+        loginUser(data);
+    };
 
   return (
     <Form onSubmit={handleSubmit(submitLogin)}>
