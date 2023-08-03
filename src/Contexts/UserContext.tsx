@@ -20,8 +20,9 @@ export interface AuthContextType {
   setCardFile: any;
   cardFile: any;
   getProducts: any;
-  Products: IProducts | null;
+  Products: IProducts | [];
   userInfo: IuserInfo | null;
+  logout: () => void;
 }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
@@ -38,9 +39,10 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [User, setUser] = useState<iUserResponse | null>(null);
   const [userInfo, setUserInfo] = useState<IuserInfo | null>(null);
   const [Products, SetProducts] = useState<IProducts | []>([]);
+  const token = localStorage.getItem("@tokenUser");
+
   useEffect(() => {
     const loadUser = async () => {
-      const token = localStorage.getItem("@tokenUser");
       if (!token) {
         setLoading(false);
       }
@@ -79,6 +81,11 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       console.log(error);
       toast.error("Email ou senha incorretas");
     }
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem("@tokenUser");
+    navigate("/login");
   };
 
   const registerUser = async (formData: IUserREgister) => {
@@ -134,6 +141,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         loading,
         userInfo,
         Products,
+        logout,
       }}
     >
       {children}

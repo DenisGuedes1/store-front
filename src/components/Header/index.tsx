@@ -7,7 +7,7 @@ interface HeadersProps {
   isLogin: boolean;
 }
 export const Headers: React.FC<HeadersProps> = ({ isLogin }) => {
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, logout } = useContext(UserContext);
   const navigate = useNavigate();
   const handleButtonClick = () => {
     if (isLogin) {
@@ -26,9 +26,7 @@ export const Headers: React.FC<HeadersProps> = ({ isLogin }) => {
             {showBothButtons ? (
               <>
                 <span>{userInfo?.email}</span>
-                <ButtonAndLogin onClick={() => navigate("/login")}>
-                  Sair
-                </ButtonAndLogin>
+                <ButtonAndLogin onClick={() => logout()}>Sair</ButtonAndLogin>
               </>
             ) : (
               <ButtonAndLogin onClick={handleButtonClick}>
