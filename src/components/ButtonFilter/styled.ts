@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivConteinerButtons = styled.div`
+export const DivConteinerButtons = styled.aside`
     width: 100%;
     max-width: 1060px;
     display: flex;
