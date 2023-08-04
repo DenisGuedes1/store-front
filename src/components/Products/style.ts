@@ -27,10 +27,9 @@ const loadingDotsAnimation = keyframes`
 export const LoadingDots = styled.p`
   font-size: 40px;
   color: #000;
-  position: relative;
   margin: 0 auto;
-  padding-top: 125px;
-  padding-left: 60%;
+  margin-top: 250px;
+  width: 60%;
   font-family: "Inter", sans-serif;
   font-weight: 500;
   background: linear-gradient(to right, blue, #444444);
@@ -62,7 +61,6 @@ export const UlProductsList = styled.ul`
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
-   
   }
 `;
 export const ImgProducts = styled.img`
