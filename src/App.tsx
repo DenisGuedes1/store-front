@@ -2,16 +2,13 @@ import { ToastContainer } from "react-toastify";
 import { RoutesMain as Routes } from "./routes/routes";
 import { GlobalStyles } from "./styles/globalstyles";
 import { UserProvider } from "./Contexts/UserContext";
-import { ProductsProvider } from "./Contexts/ProductsContexts";
 
 const App = () => {
     return (
         <>
             <GlobalStyles />
             <UserProvider>
-                <ProductsProvider>
-                    <Routes />
-                </ProductsProvider>
+                <Routes />
             </UserProvider>
 
             <ToastContainer

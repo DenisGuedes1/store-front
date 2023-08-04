@@ -4,7 +4,7 @@ import { ButtonAndLogin, DivHeader, Nav, SpanButtonLogin } from "./style";
 import { LogoText } from "../FormRegister/style";
 import { UserContext } from "../../Contexts/UserContext";
 interface HeadersProps {
-  isLogin: boolean;
+    isLogin: boolean;
 }
 export const Headers: React.FC<HeadersProps> = ({ isLogin }) => {
   const { userInfo, logout } = useContext(UserContext);

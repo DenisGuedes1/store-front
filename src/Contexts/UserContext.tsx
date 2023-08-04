@@ -23,6 +23,8 @@ export interface AuthContextType {
   Products: IProducts | [];
   userInfo: IuserInfo | null;
   logout: () => void;
+  SetProducts: React.Dispatch<React.SetStateAction<IProducts | []>>
+  
 }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
@@ -39,10 +41,9 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [User, setUser] = useState<iUserResponse | null>(null);
   const [userInfo, setUserInfo] = useState<IuserInfo | null>(null);
   const [Products, SetProducts] = useState<IProducts | []>([]);
-  const token = localStorage.getItem("@tokenUser");
-
   useEffect(() => {
     const loadUser = async () => {
+      const token = localStorage.getItem("@tokenUser");
       if (!token) {
         setLoading(false);
       }
@@ -52,11 +53,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        //
-        console.log(response.data);
-        setUserInfo(response.data);
 
-        //
+        setUserInfo(response.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -83,11 +81,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const logout = () => {
-    window.localStorage.removeItem("@tokenUser");
-    navigate("/login");
-  };
-
   const registerUser = async (formData: IUserREgister) => {
     try {
       setLoading(true);
@@ -111,12 +104,28 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const getProducts = async () => {
     try {
       const response = await api.get("products");
-      console.log(response, "response get");
+
       SetProducts(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      await getProducts();
+      const intervalId = setInterval(getProducts, 9000);
+
+      return () => clearInterval(intervalId);
+    };
+    fetchData()
+  }, []);
+
+  const logout = () => {
+    window.localStorage.removeItem("@tokenUser");
+    navigate("/login");
+  };
+
+
   //   useEffect(() => {
   //     const fetchData = async () => {
   //     //   await getProducts();
@@ -142,6 +151,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         userInfo,
         Products,
         logout,
+        SetProducts
       }}
     >
       {children}
