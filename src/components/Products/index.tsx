@@ -21,24 +21,23 @@ import {
 import { HeartAdd, BagTick2 } from "iconsax-react";
 import { toast } from "react-toastify";
 export const ProductsList = () => {
+
   const { Products } = useContext(UserContext);
-  console.log(Products, "*****produtos");
-
   const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
-
   const idProducts = (id: string) => {
     toggleFavorite(id);
   };
-
-  const toggleFavorite = (productId: string) => {
-    if (favoriteProducts.includes(productId)) {
-      toast.warning("Item removido dos favoritos");
-      setFavoriteProducts(favoriteProducts.filter((id) => id !== productId));
-    } else {
-      toast.success("Item adicionado aos favoritos");
-      setFavoriteProducts([...favoriteProducts, productId]);
-    }
-  };
+  
+    const toggleFavorite = (productId: string) => {
+        if (favoriteProducts.includes(productId)) {
+            setFavoriteProducts(
+                favoriteProducts.filter((id) => id !== productId)
+            );
+        } else {
+            toast.success("Item adicionado aos favoritos");
+            setFavoriteProducts([...favoriteProducts, productId]);
+        }
+    };
 
   const iconStyle = (productId: string) => ({
     background: favoriteProducts.includes(productId) ? "#ff0000" : "#ffffff",

@@ -35,6 +35,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 export const UserProvider = ({ children }: AuthProviderProps) => {
+
   const [loading, setLoading] = useState(true);
   const [cardFile, setCardFile] = useState();
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
+
 
         setUserInfo(response.data);
       } catch (error) {
