@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HamburgerButton, MenuItem, MenuItems, MenuWrapper } from "./style";
 import { useNavigate } from "react-router-dom";
 export const HamburgerMenu = () => {
