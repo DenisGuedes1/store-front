@@ -70,7 +70,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
             window.localStorage.setItem("@tokenUser", response.data);
 
-            navigate("/");
+            navigate("/dashboard/user");
             toast.success("Você está logado");
             console.log(response);
         } catch (error) {

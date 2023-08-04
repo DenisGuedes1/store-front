@@ -23,7 +23,6 @@ import { HeartAdd, BagTick2 } from "iconsax-react";
 import { toast } from "react-toastify";
 export const ProductsList = () => {
     const { Products } = useContext(UserContext);
-    console.log(Products, "*****produtos");
 
     const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
@@ -33,7 +32,6 @@ export const ProductsList = () => {
 
     const toggleFavorite = (productId: string) => {
         if (favoriteProducts.includes(productId)) {
-            toast.warning("Item removido dos favoritos");
             setFavoriteProducts(
                 favoriteProducts.filter((id) => id !== productId)
             );
