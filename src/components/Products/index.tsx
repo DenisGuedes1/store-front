@@ -17,6 +17,7 @@ import {
     AnimatedButton,
     SpanSale,
     ButtonSaleCart,
+    DivConteinerProductsAside,
 } from "./style";
 import { HeartAdd, BagTick2 } from "iconsax-react";
 import { toast } from "react-toastify";
@@ -51,58 +52,69 @@ export const ProductsList = () => {
 
     return (
         <>
-            <ButtonsFilter />
-            {Array.isArray(Products) && Products.length > 0 ? (
-                <ConteinerDiv>
-                    {Products.map((product: IProducts) => (
-                        <UlProductsList>
-                            <Liproducts key={product.id}>
-                                <IconWrapper>
-                                    <HeartAdd
-                                        style={iconStyle(product.id)}
-                                        onClick={() => idProducts(product.id)}
-                                        size="32"
-                                        color="#040404"
-                                        variant="Outline"
-                                        className="heartIcon"
-                                    />
-                                </IconWrapper>
-                                <ImgProducts src={product.foto1} alt="" />
-                                <SpanInfoPorducts>
-                                    <NameProducts>{product.name}</NameProducts>
-                                    <CategoryProducts>
-                                        {product.category}
-                                    </CategoryProducts>
-                                    <CategoryProducts>
-                                        {product.descricao}
-                                    </CategoryProducts>
-                                    <PriceProducts>
-                                        R${parseFloat(product.price).toFixed(2)}
-                                    </PriceProducts>
-                                    <SpanSale>
-                                        <AnimatedButton>Comprar</AnimatedButton>
-                                        <ButtonSaleCart>
-                                            {
-                                                <BagTick2
-                                                    size="32"
-                                                    color="#040404"
-                                                    variant="TwoTone"
-                                                />
-                                            }{" "}
-                                        </ButtonSaleCart>
-                                    </SpanSale>
-                                </SpanInfoPorducts>
-                            </Liproducts>
-                        </UlProductsList>
-                    ))}
-                </ConteinerDiv>
-            ) : (
-                <ConteinerDivLoad>
-                    <LoadingDots className="loading-dots">
-                        Carregando Produtos
-                    </LoadingDots>
-                </ConteinerDivLoad>
-            )}
+            <DivConteinerProductsAside>
+                <ButtonsFilter />
+                {Array.isArray(Products) && Products.length > 0 ? (
+                    <ConteinerDiv>
+                        {Products.map((product: IProducts) => (
+                            <UlProductsList>
+                                <Liproducts key={product.id}>
+                                    <IconWrapper>
+                                        <HeartAdd
+                                            style={iconStyle(product.id)}
+                                            onClick={() =>
+                                                idProducts(product.id)
+                                            }
+                                            size="32"
+                                            color="#040404"
+                                            variant="Outline"
+                                            className="heartIcon"
+                                        />
+                                    </IconWrapper>
+                                    <ImgProducts src={product.foto1} alt="" />
+                                    <SpanInfoPorducts>
+                                        <NameProducts>
+                                            {product.name}
+                                        </NameProducts>
+                                        <CategoryProducts>
+                                            {product.category}
+                                        </CategoryProducts>
+                                        <CategoryProducts>
+                                            {product.descricao}
+                                        </CategoryProducts>
+                                        <PriceProducts>
+                                            R$
+                                            {parseFloat(product.price).toFixed(
+                                                2
+                                            )}
+                                        </PriceProducts>
+                                        <SpanSale>
+                                            <AnimatedButton>
+                                                Comprar
+                                            </AnimatedButton>
+                                            <ButtonSaleCart>
+                                                {
+                                                    <BagTick2
+                                                        size="32"
+                                                        color="#040404"
+                                                        variant="TwoTone"
+                                                    />
+                                                }{" "}
+                                            </ButtonSaleCart>
+                                        </SpanSale>
+                                    </SpanInfoPorducts>
+                                </Liproducts>
+                            </UlProductsList>
+                        ))}
+                    </ConteinerDiv>
+                ) : (
+                    <ConteinerDivLoad>
+                        <LoadingDots className="loading-dots">
+                            Carregando Produtos
+                        </LoadingDots>
+                    </ConteinerDivLoad>
+                )}
+            </DivConteinerProductsAside>
         </>
     );
 };

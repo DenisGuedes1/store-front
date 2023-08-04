@@ -154,3 +154,7 @@ export const ButtonSaleCart = styled.button`
     border: none;
     background-color: transparent;
 `;
+export const DivConteinerProductsAside = styled.div`
+    display: flex;
+    gap: 20px;
+`;
