@@ -3,45 +3,46 @@ import "react-toastify/dist/ReactToastify.css";
 import { api } from "../api/api";
 
 import { AuthContextProductsType } from "./interfaces/context.interface";
+import { UserContext } from "./UserContext";
 
 export const ProductsProvider = createContext<AuthContextProductsType>(
-    {} as AuthContextProductsType
+  {} as AuthContextProductsType
 );
 
 interface AuthProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 export const ProductsContext = ({ children }: AuthProviderProps) => {
-    // const { SetProducts } = useContext(UserContext);
+  const { SetProducts } = useContext(UserContext);
 
-    const getProducts = async () => {
-        try {
-            const response = await api.get("/products");
-            console.log(response, "response get");
-            const productsData = response.data;
-            // SetProducts(productsData);
-        } catch (error) {
-            console.log(error);
-        }
+  const getProducts = async () => {
+    try {
+      const response = await api.get("/products");
+      console.log(response, "response get");
+      const productsData = response.data;
+      SetProducts(productsData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      // await getProducts();
+      const intervalId = setInterval(getProducts, 9000);
+
+      return () => clearInterval(intervalId);
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            // await getProducts();
-            const intervalId = setInterval(getProducts, 9000);
 
-            return () => clearInterval(intervalId);
-        };
+    fetchData();
+  }, []);
 
-        // fetchData();
-    }, []);
-
-    return (
-        <ProductsProvider.Provider
-            value={{
-                getProducts,
-            }}
-        >
-            {children}
-        </ProductsProvider.Provider>
-    );
+  return (
+    <ProductsProvider.Provider
+      value={{
+        getProducts,
+      }}
+    >
+      {children}
+    </ProductsProvider.Provider>
+  );
 };
