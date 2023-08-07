@@ -1,19 +1,19 @@
-import { DivConteinerButtons } from "./styled";
+import { ButtonFilter, DivConteinerButtons } from "./styled";
 
 export const ButtonsFilter = () => {
     return (
         <>
             <DivConteinerButtons>
-                <button>Camisetas</button>
-                <button>Camisas</button>
-                <button>Calças</button>
-                <button>Shorts</button>
-                <button>Saia</button>
-                <button>Vestidos</button>
-                <button>Blazers</button>
-                <button>Casacos</button>
-                <button>Jaquetas</button>
-                <button>Roupas íntimas</button>
+                <ButtonFilter>Camisetas</ButtonFilter>
+                <ButtonFilter>Camisas</ButtonFilter>
+                <ButtonFilter>Calças</ButtonFilter>
+                <ButtonFilter>Shorts</ButtonFilter>
+                <ButtonFilter>Saia</ButtonFilter>
+                <ButtonFilter>Vestidos</ButtonFilter>
+                <ButtonFilter>Blazers</ButtonFilter>
+                <ButtonFilter>Casacos</ButtonFilter>
+                <ButtonFilter>Jaquetas</ButtonFilter>
+                <ButtonFilter>íntimas</ButtonFilter>
             </DivConteinerButtons>
         </>
     );

@@ -48,13 +48,14 @@ export const FormRegister = () => {
     });
 
     const onSubmitFunction = async (data: IUserREgister) => {
+        console.log(cardFile, "avatar");
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("email", data.email);
         formData.append("password", data.password);
         formData.append("avatar", cardFile!);
 
-        await registerUser(data);
+        await registerUser(formData);
     };
 
     const handleUploadFile = (e: any) => setCardFile(e.target.files[0]);
