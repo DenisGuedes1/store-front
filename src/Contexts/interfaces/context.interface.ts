@@ -19,6 +19,8 @@ export interface AuthContextType {
     Products: IProducts | [];
     SetProducts: any;
     userInfo: IuserInfo | null;
+    isModalOpen: boolean;
+    setIsModalOpen: boolean;
 }
 export interface AuthContextProductsType {
     getProducts: () => void;
