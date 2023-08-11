@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivConteinerButtons = styled.aside`
+export const DivConteinerButtons = styled.ul`
     display: flex;
     flex-direction: row;
     overflow-y: scroll;
