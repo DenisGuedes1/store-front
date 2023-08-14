@@ -26,12 +26,18 @@ export interface AuthContextType {
     setCardFile: any;
     cardFile: any;
     getProducts: any;
+    setSearchValue: any;
+    searchValue: any;
+    searchResults: any;
+    setSearchResults: any;
     Products: IProducts | [];
     userInfo: IuserInfo | null;
     logout: () => void;
     SetProducts: React.Dispatch<React.SetStateAction<IProducts | []>>;
     isModalOpen: boolean;
     setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
+    selectedProduct: IProducts | null;
+    setSelectedProduct: React.Dispatch<SetStateAction<IProducts | null>>;
 }
 // export const AuthContext = createContext({});
 export const UserContext = createContext<AuthContextType>(
@@ -43,6 +49,11 @@ interface AuthProviderProps {
 }
 export const UserProvider = ({ children }: AuthProviderProps) => {
     const [loading, setLoading] = useState(true);
+    const [searchValue, setSearchValue] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState<IProducts | null>(
+        null
+    );
     const [cardFile, setCardFile] = useState();
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,6 +65,9 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             const token = localStorage.getItem("@tokenUser");
             if (!token) {
                 setLoading(false);
+
+                toast.error("voce precisa estar logado");
+                navigate("/login");
             }
             try {
                 const response = await api.get("store/user", {
@@ -87,7 +101,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
             toast.error("Email ou senha incorretas");
         }
     };
-
     const registerUser = async (formData: IUserREgister) => {
         try {
             setLoading(true);
@@ -139,6 +152,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
                 loginUser,
                 cardFile,
                 User,
+                searchResults,
+                setSearchResults,
                 setCardFile,
                 toast,
                 loading,
@@ -148,6 +163,10 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
                 SetProducts,
                 setIsModalOpen,
                 isModalOpen,
+                setSearchValue,
+                searchValue,
+                selectedProduct,
+                setSelectedProduct,
             }}
         >
             {children}
